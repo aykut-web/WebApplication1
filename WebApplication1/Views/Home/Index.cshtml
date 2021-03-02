@@ -1,0 +1,149 @@
+﻿@model Tuple<List<LocationVm>,List<MovieVm>>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+}
+
+
+
+<div class="row">
+    <div class="col-4 shadow-sm float-left pt-3 pb-3 rounded">
+        <h4 class="text-center text-info" style="font-family: 'Times New Roman', Times, serif">Count of Movies</h4>
+        <canvas id="locations" width="350" height="350"></canvas>
+        <div class="col shadow-sm float-lg-right pt-3 pb-3 rounded"> </div>
+    </div>
+    <div class="col">
+        <table class="table mb-4 border-0 shadow-lg rounded">
+            <thead>
+                <tr>
+                    <th>
+                        Name 
+                    </th>
+                    <th>
+                        Room 
+                    </th>
+                    <th>
+                        Capacity 
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Item1)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Room)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Capacity)
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col shadow-sm rounded">
+        <table class="table mb-4 border-0 shadow-lg rounded">
+            <thead>
+                <tr>
+                    <th>
+                        ImageFolder
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Location
+                    </th>
+                    <th>
+                        ReleaseDate
+                    </th>
+                    <th>
+                        Genre
+                    </th>
+                    <th>
+                        Sales
+                    </th>
+
+
+
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Item2)
+                {
+                    <tr>
+                        <td>
+                            <img src="~/Image/@item.ImageFolder " ; width="100" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.Location.Name)*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReleaseDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Genre)
+                        </td>
+                        
+
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section js{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+    <script>
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = `#`;
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color  ;
+        }
+
+        var locationsCtx = document.getElementById("locations").getContext('2d');
+        
+        $.getJSON("/locations/_getlocationsreport", function (result)
+        {
+            let colors = [];
+            for (var i = 0; i < result.labels.length; i++) {
+                colors.push(getRandomColor());
+            }
+            var locationsChart = new Chart(locationsCtx, {
+                type: "pie",
+                data: {
+                    labels: result.labels,
+                    datasets: [{
+                        data: result.data,
+                        backgroundColor: colors,
+                    }]
+                }
+            });
+        });
+    </script>
+}

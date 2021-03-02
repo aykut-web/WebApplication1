@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+
+@{ ViewData["Title"] = "Index"; }
+
+<div class="card mb-4 border-0 shadow-sm rounded">
+    <div class="card-body">
+        <p>
+            <a asp-action="Create" class="btn shadow-sm text-success">
+                <i class="fas fa-pencil-alt"></i>   Create New
+            </a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            <a class="btn btn-sm shadow-sm text-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a>
+        </td>
+    </tr>}
+            </tbody>
+        </table>
+    </div>
+</div>

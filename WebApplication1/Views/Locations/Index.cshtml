@@ -1,0 +1,58 @@
+﻿@model IEnumerable<LocationVm>
+
+@{
+    ViewData["Title"] = "Index";
+}
+    
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table mb-4 border-0 shadow-lg rounded">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movies)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Capacity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @string.Join("/",item.Movies.Select(m=>m.Movie.Name).ToArray())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Capacity)
+            </td>
+            <td>
+                <a class="btn btn-sm shadow-sm text-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a>
+                <a class="btn btn-sm shadow-sm text-info" asp-action="Detail" asp-route-id="@item.Id"><i class="fas fa-search"></i></a>
+                <a class="btn btn-sm shadow-sm text-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
