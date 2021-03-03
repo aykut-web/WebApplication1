@@ -9,6 +9,8 @@ namespace WebApplication1.DomainLayer.Entities.Concrete
     {
         //public Guid LocationId { get; set; }
         //public Location Location { get; set; }
+
+
         public string Title { get; set; }
         public int Tckn { get; set; }
         public int PhoneNumber { get; set; }
