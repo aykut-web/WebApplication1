@@ -108,7 +108,6 @@ namespace Blog.Web.Areas.Admin.Controllers
                     user.UserName = vm.Email;
                     IdentityResult validPassword = null;
 
-                    // Password güncelleme işlemi
                     if (!string.IsNullOrWhiteSpace(vm.Password))
                     {
                         validPassword = await _passwordValidator.ValidateAsync(_userManager, user, vm.Password);
@@ -125,7 +124,6 @@ namespace Blog.Web.Areas.Admin.Controllers
                         }
                     }
 
-                    // Kullanıcıyı db üzeriden güncelleme işlemi
                     if (validPassword.Succeeded)
                     {
                         var result = await _userManager.UpdateAsync(user);

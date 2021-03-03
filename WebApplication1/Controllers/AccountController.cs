@@ -33,19 +33,18 @@ namespace Blog.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                // kullanıcıyı mail adresine göre buluyoruz
                 var user = await _userManager.FindByEmailAsync(vm.Email);
-                if (user != null)  // eğer, mail adresine uyan bir kullanıcı var ise, login işlemlerini yapıyoruz.
+                if (user != null)  
                 {
-                    await _signInManager.SignOutAsync();  // öncelik cookie vs. gibi yapılarda kullanıcının bilgileri kaldıysa, çıkış işlemini yaptırıp sonrasında tekrar login olmasını sağlıyoruz.
+                    await _signInManager.SignOutAsync();  
                     var result = await _signInManager.PasswordSignInAsync(user, vm.Password, false, false);
-                    if (result.Succeeded) // kullanıcı başarılı bir şekilde giriş yaptıysa, yönlendirme işlemlerini yapıyoruz.
+                    if (result.Succeeded) 
                     {
-                        return Redirect(ReturnUrl ?? @"\home\"); // eğer kullanıcı direkt olarak login sayfasını açtıysa, giriş yaptıktan sonra admin\home\index ' yönlendiriyoruz. eğer kullanıcı url üzerinden login olmadan bir adrese girmeye çalışırsa önce login olmasını sağlıyoruz ve gitmek istediği adrese yönlendiriyoruz
+                        return Redirect(ReturnUrl ?? @"\home\"); 
                     }
                 }
 
-                // kullanıcı bilgilerine uyan bir kullanıcı yok ise,
+                
                 ModelState.AddModelError("Email", "Invalid mail or password");
             }
             //ViewBag.ReturnUrl = url;
