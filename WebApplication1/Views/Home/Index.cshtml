@@ -1,9 +1,9 @@
-﻿@model Tuple<List<LocationVm>,List<MovieVm>>
+﻿@model Tuple<List<LocationVm>, List<MovieVm>>
 
 @{
     ViewData["Title"] = "Home Page";
 }
-
+    
 @section css{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 }
@@ -21,13 +21,13 @@
             <thead>
                 <tr>
                     <th>
-                        Name 
+                        Name
                     </th>
                     <th>
-                        Room 
+                        Room
                     </th>
                     <th>
-                        Capacity 
+                        Capacity
                     </th>
                     <th></th>
                 </tr>
@@ -45,7 +45,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Capacity)
                         </td>
-                        
+
                     </tr>
                 }
             </tbody>
@@ -54,19 +54,14 @@
 
 </div>
 
+
 <div class="row">
-    <div class="col shadow-sm rounded">
-        <table class="table mb-4 border-0 shadow-lg rounded">
+    <div class="col-8 shadow-sm rounded">
+        <table class="table mb border-0 shadow-lg rounded">
             <thead>
                 <tr>
                     <th>
-                        ImageFolder
-                    </th>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Location
+
                     </th>
                     <th>
                         ReleaseDate
@@ -74,76 +69,78 @@
                     <th>
                         Genre
                     </th>
-                    <th>
-                        Sales
-                    </th>
-
-
-
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Item2)
                 {
-                    <tr>
-                        <td>
-                            <img src="~/Image/@item.ImageFolder " ; width="100" />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @*@Html.DisplayFor(modelItem => item.Location.Name)*@
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ReleaseDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Genre)
-                        </td>
-                        
+                <tr>
+                    <td>
+                        <img src="~/Image/@item.ImageFolder " ; width="350" />
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        <iframe width="560" height="315" src="//www.youtube.com/embed/@item.Frame" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </td>
 
 
 
-                    </tr>
+                </tr>
                 }
             </tbody>
         </table>
     </div>
+    @*<div class="col-4 shadow-sm rounded">
+        <table>
+            <tr>
+                @foreach (var item in Model.Item2)
+                {
+                <td>
+                    <iframe width="560" height="315" src="//www.youtube.com/embed/@item.Frame" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </td>
+                }
+            </tr>
+        </table>
+    </div>*@
 </div>
 
-@section js{
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
-    <script>
-        function getRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = `#`;
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color  ;
-        }
+    @section js{
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
-        var locationsCtx = document.getElementById("locations").getContext('2d');
-        
-        $.getJSON("/locations/_getlocationsreport", function (result)
-        {
-            let colors = [];
-            for (var i = 0; i < result.labels.length; i++) {
-                colors.push(getRandomColor());
-            }
-            var locationsChart = new Chart(locationsCtx, {
-                type: "pie",
-                data: {
-                    labels: result.labels,
-                    datasets: [{
-                        data: result.data,
-                        backgroundColor: colors,
-                    }]
+        <script>
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF';
+                var color = `#`;
+                for (var i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
                 }
+                return color;
+            }
+
+            var locationsCtx = document.getElementById("locations").getContext('2d');
+
+            $.getJSON("/locations/_getlocationsreport", function (result) {
+                let colors = [];
+                for (var i = 0; i < result.labels.length; i++) {
+                    colors.push(getRandomColor());
+                }
+                var locationsChart = new Chart(locationsCtx, {
+                    type: "pie",
+                    data: {
+                        labels: result.labels,
+                        datasets: [{
+                            data: result.data,
+                            backgroundColor: colors,
+                        }]
+                    }
+                });
             });
-        });
-    </script>
-}
+        </script>
+    }

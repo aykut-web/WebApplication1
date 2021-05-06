@@ -15,6 +15,7 @@ namespace WebApplication1.ApplicationLayer.Mapper.ViewModels.MovieViewModels
         public string Genre { get; set; }
         public string Description { get; set; }
         public int Sales { get; set; }
+        public string Frame { get; set; }
 
         public string ImageFolder { get; set; }
 

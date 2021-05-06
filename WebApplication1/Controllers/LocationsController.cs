@@ -18,13 +18,11 @@ namespace WebApplication1.Controllers
     {
         private readonly IMappedLocation _locationRepo;
         private readonly IMappedMovie _movieRepo;
-        private readonly ProjectContext _context;
 
-        public LocationsController(IMappedLocation locationRepo, IMappedMovie movieRepo, ProjectContext context)
+        public LocationsController(IMappedLocation locationRepo, IMappedMovie movieRepo)
         {
             this._locationRepo = locationRepo;
             this._movieRepo = movieRepo;
-            this._context = context;
         }
 
         [AllowAnonymous]
@@ -128,6 +126,41 @@ namespace WebApplication1.Controllers
             }
             return View(location);
         }
+
+
+        public JsonResult _GetLocationsReport()
+        {
+            var moviesCount = (_locationRepo.GetAllMappedLocations().GroupBy(c=> new {c.Name, c.Movies }).Select(c => new
+            {
+                labels = c.Key.Name,
+                data = c.Key.Movies.Count()
+            }));
+
+
+
+
+
+            //_context.Movies.GroupBy(c => new { c.Location.Id, c.Location.Name })
+            //    .Select(c => new
+            //    {
+            //        labels = c.Key.Name,
+            //        data = c.Count()
+            //    }));
+
+            return Json(new
+            {
+                labels = moviesCount.Select(x => x.labels).ToArray(),
+                data = moviesCount.Select(x => x.data).ToArray()
+            });
+        }
+
+
+
+
+
+
+
+
 
         //public JsonResult _GetLocationsReport()
         //{

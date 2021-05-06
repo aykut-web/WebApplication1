@@ -16,12 +16,14 @@ namespace WebApplication1.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IMappedLocation _locationRepo;
         private readonly IMappedMovie _movieRepo;
-
+        //private readonly ProjectContext _context;
         public HomeController(ILogger<HomeController> logger, IMappedLocation locationRepo, IMappedMovie movieRepo)
         {
             this._logger = logger;
             this._locationRepo = locationRepo;
             this._movieRepo = movieRepo;
+
+           
             
         }
 
@@ -29,7 +31,8 @@ namespace WebApplication1.Controllers
         {
             var lc = _locationRepo.GetAllMappedLocations().ToList();
             var mv = _movieRepo.GetAllMappedMovies().ToList();
-            //var mv = _context.Movies.ToList();
+            //var mmv = _context.Movies.ToList();
+            //var llc = _context.Locations.ToList();
             var tuple = Tuple.Create(lc, mv);
             return View(tuple);
 

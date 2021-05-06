@@ -133,7 +133,7 @@ namespace WebApplication1.Controllers
         public IActionResult DeleteConfirmed(Guid id)
         {
             var vm = _repo.GetDeleteMappedMovie(id);
-           
+
             var folder = @"wwwroot\Image";
             var imagesFile = vm.ImageFolder;
             if (System.IO.File.Exists(Path.Combine(folder, imagesFile)))
@@ -142,7 +142,7 @@ namespace WebApplication1.Controllers
                 System.IO.File.Delete(Path.Combine(folder, imagesFile));
 
             }
-            
+
             _repo.DeleteMappedMovie(vm);
             _repo.Save();
             return RedirectToAction(nameof(Index));

@@ -35,7 +35,7 @@ namespace WebApplication1.DomainLayer.Entities.Concrete
 
         [NotMapped]
         public IFormFile ImageFile { get; set; } 
-        [MaxLength(100)]
+        [MaxLength(1000)]
         public string Description { get; set; }
 
 
@@ -51,6 +51,7 @@ namespace WebApplication1.DomainLayer.Entities.Concrete
         //public ICollection<Location> Locations { get; set; }
 
         public int Sales { get; set; }
+        public string Frame { get; set; }
     }
 
 
